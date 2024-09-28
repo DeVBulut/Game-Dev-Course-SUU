@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public int _respawnCount = 1;
     [SerializeField]private TextMeshProUGUI _ballText;
     [SerializeField] private GameObject _failedPanel;
+    [SerializeField] private GameObject _wonPanel;
     [HideInInspector] public bool GameRunning;
 
     void Start()
@@ -51,5 +52,11 @@ public class GameManager : MonoBehaviour
     private void UpdateBallText()
     {
         _ballText.text = "Balls Remaining: " + (_maxRespawns - _respawnCount) + " / 3";
+    }
+
+    public void PlayerWon()
+    {
+        _wonPanel.SetActive(true); 
+        GameRunning = false;
     }
 }
