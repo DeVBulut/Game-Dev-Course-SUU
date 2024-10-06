@@ -4,12 +4,27 @@ using UnityEngine;
 
 public class DoorBehaviour : MonoBehaviour
 {
-    [SerializeField] bool _playerInRange;
+    public Color DoorColor;
+    bool _playerInRange;
+    [SerializeField] private KeyBehaviour keyForDoor;
+
+    private void Start()
+    {
+        GetComponent<MeshRenderer>().material.color = DoorColor; 
+        keyForDoor.GetComponent<MeshRenderer>().material.color = DoorColor;
+    }
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.E) && _playerInRange)
         {
-            Destroy(gameObject);
+            foreach(KeyBehaviour key in PlayerController.instance.KeysCollected)
+            {
+                if(key == keyForDoor)
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+            }
         }
     }
 
