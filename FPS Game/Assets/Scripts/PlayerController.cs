@@ -1,20 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : CharacterBehaviour
 {
-    public static PlayerController instance;
-    public List<KeyBehaviour> KeysCollected;
-    // Start is called before the first frame update
-    void Start()
+    public static PlayerController Instance;
+    [SerializeField] private GameObject _failureWindow;
+    [SerializeField] private TextMeshProUGUI _healthUIText;
+    private void Awake()
     {
-        instance = this;
+        Instance = this;
+        Debug.Log("Starting player");
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        _healthUIText.text = "Health: " + _currentHealth + "/" + _maxHealth; 
+    }
+    public override void Die()
+    {
+        _failureWindow.SetActive(true);
+        GetComponent<PlayerMovementBehaviour>().enabled = false;
+        GetComponent<PlayerWeaponBehaviour>().enabled = false;
+        GetComponentInChildren<CameraController>().enabled = false;
     }
 }
